@@ -10,7 +10,10 @@ import datashape
 
 from blaze.compute.sql import (compute, computefull, select, lower_column,
                                compute_up)
-from blaze.expr import *
+from blaze.expr import (symbol, Symbol, discover, transform, summary, by, sin,
+                        join, floor, cos, merge, nunique, Distinct, mean, sum,
+                        count)
+
 from blaze.compatibility import xfail
 from toolz import unique
 from pandas import DataFrame
