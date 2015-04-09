@@ -10,8 +10,8 @@ import datashape
 
 from blaze.compute.sql import (compute, computefull, select, lower_column,
                                compute_up)
-from blaze.expr import (symbol, Symbol, discover, transform, summary, by, sin,
-                        join, floor, cos, merge, nunique, Distinct, mean, sum,
+from blaze.expr import (symbol, discover, transform, summary, by, sin, join,
+                        floor, cos, merge, nunique, distinct, mean, sum,
                         count)
 
 from blaze.compatibility import xfail
@@ -270,8 +270,9 @@ def test_count_on_table():
               FROM accounts
               WHERE accounts.amount > :amount_1) as alias"""))
 
+
 def test_distinct():
-    result = str(compute(Distinct(t['amount']), s, post_compute=False))
+    result = str(compute(distinct(t['amount']), s, post_compute=False))
 
     assert 'distinct' in result.lower()
     assert 'amount' in result.lower()
@@ -892,15 +893,15 @@ def test_computation_directly_on_metadata():
 
 
 sql_bank = sa.Table('bank', sa.MetaData(),
-                 sa.Column('id', sa.Integer),
-                 sa.Column('name', sa.String),
-                 sa.Column('amount', sa.Integer))
+                    sa.Column('id', sa.Integer),
+                    sa.Column('name', sa.String),
+                    sa.Column('amount', sa.Integer))
 sql_cities = sa.Table('cities', sa.MetaData(),
-                   sa.Column('name', sa.String),
-                   sa.Column('city', sa.String))
+                      sa.Column('name', sa.String),
+                      sa.Column('city', sa.String))
 
-bank = Symbol('bank', discover(sql_bank))
-cities = Symbol('cities', discover(sql_cities))
+bank = symbol('bank', discover(sql_bank))
+cities = symbol('cities', discover(sql_cities))
 
 
 def test_aliased_views_with_two_group_bys():
